@@ -37,7 +37,7 @@ app.use(cors()); // Use cors middleware
 app.use(express.json());
 
 // API Routes
-app.use("/users", authRoutes);
+app.use("/api/users", authRoutes); // This is the correct version
 
 // Connect to Database
 connectDB();
