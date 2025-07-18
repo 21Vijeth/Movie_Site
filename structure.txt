@@ -1,0 +1,51 @@
+.
+├── backend
+│   ├── api
+│   │   └── index.js
+│   ├── config
+│   │   └── db.js
+│   ├── middleware
+│   │   └── auth.js
+│   ├── models
+│   │   └── User.js
+│   └── routes
+│       └── auth.js
+├── frontend
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── public
+│   │   ├── hero-bg.png
+│   │   ├── hero.png
+│   │   ├── logo.png
+│   │   ├── no-movie.png
+│   │   ├── project.gif
+│   │   ├── search.svg
+│   │   └── star.svg
+│   ├── README.md
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── appwrite.js
+│   │   ├── assets
+│   │   │   └── react.svg
+│   │   ├── auth.appwrite.js
+│   │   ├── components
+│   │   │   ├── MovieCard.jsx
+│   │   │   ├── Navbar.jsx
+│   │   │   ├── Search.jsx
+│   │   │   └── Spinner.jsx
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   └── pages
+│   │       ├── Home.jsx
+│   │       ├── Login.jsx
+│   │       └── Register.jsx
+│   └── vite.config.js
+├── package.json
+├── package-lock.json
+├── structure.txt
+└── vercel.json
+
+13 directories, 36 files
