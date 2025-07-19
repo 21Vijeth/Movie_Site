@@ -73,7 +73,7 @@ const Login = () => {
     setError('');
     try {
         // 1. Log in via your MERN backend to get the JWT
-        const res = await axios.post('/api/users/login', formData);
+        const res = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/login`, formData);
         localStorage.setItem('token', res.data.token);
 
         // 2. ALSO log in via Appwrite to create an Appwrite session

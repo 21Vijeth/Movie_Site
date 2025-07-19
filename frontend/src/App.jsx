@@ -17,7 +17,7 @@ const App = () => {
       if (token) {
         try {
           axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-          const res = await axios.get('/api/users/me');
+          const res = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/users/me`);
           setUser(res.data);
         } catch (err) {
           localStorage.removeItem("token");

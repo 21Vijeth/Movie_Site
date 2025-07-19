@@ -78,7 +78,7 @@ const Register = () => {
     }
     try {
         // 1. Register user in your MERN backend (this remains the same)
-        await axios.post('/api/users/register', formData);
+        await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/users/register`, formData);
 
         // 2. ALSO register the user in Appwrite
         await registerAppwriteUser(email, password, username);
