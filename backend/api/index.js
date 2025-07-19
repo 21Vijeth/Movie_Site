@@ -75,23 +75,13 @@ const app = express();
 // 1. Set Security Headers
 app.use(helmet());
 
-// 2. Configure CORS for Production
-const allowedOrigins = [process.env.FRONTEND_URL];
+// 2. Configure CORS for Production (Simplified and Corrected)
+// This single block of code is enough to handle all requests,
+// including the preflight OPTIONS requests.
 const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200 // For legacy browser support
 };
-
-// --- THIS IS THE CRITICAL FIX ---
-// Enable pre-flight requests for all routes
-app.options('*', cors(corsOptions)); // This must come BEFORE your routes
-
-// Now apply the CORS options to all subsequent requests
 app.use(cors(corsOptions));
 
 
