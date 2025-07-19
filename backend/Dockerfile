@@ -1,20 +1,22 @@
-# 1. Use an official Node.js runtime as a parent image
+# Use an official Node.js runtime
 FROM node:18-alpine
 
-# 2. Set the working directory in the container
+# Set the working directory in the container
 WORKDIR /app
 
-# 3. Copy package.json and package-lock.json first for better caching
+# Copy package.json and package-lock.json from the 'backend' folder
+# (This works because the Root Directory is now set to 'backend')
 COPY package*.json ./
 
-# 4. Install production dependencies
+# Install production dependencies
 RUN npm install --omit=dev
 
-# 5. Copy the rest of your backend application code
+# Copy the rest of your backend application code into /app
 COPY . .
 
-# 6. Expose the port your app runs on
+# Expose the port your app runs on
 EXPOSE 5000
 
-# 7. Define the command to run your app
+# Define the command to run your app
+# This now correctly points to /app/api/index.js
 CMD [ "node", "api/index.js" ]
