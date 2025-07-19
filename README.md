@@ -158,10 +158,6 @@ npm run dev
 * [Appwrite](https://appwrite.io/) for backend services
 * [Render](https://render.com) & [Vercel](https://vercel.com) for deployment platforms
 
----
 
-> Feel free to fork this repo and customize it for your own movie app! Contributions welcome 🚀
-
-```
 
 
