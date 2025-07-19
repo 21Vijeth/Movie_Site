@@ -59,11 +59,10 @@
 // app.listen(PORT, () => {
 //     console.log(`Server started on port ${PORT}`);
 // });
-
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import helmet from 'helmet'; // <-- 1. Import Helmet
+import helmet from 'helmet';
 import { connectDB } from '../config/db.js';
 import authRoutes from '../routes/auth.js';
 
@@ -80,57 +79,47 @@ app.use(helmet());
 const allowedOrigins = [process.env.FRONTEND_URL];
 const corsOptions = {
   origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-      return callback(new Error(msg), false);
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
     }
-    return callback(null, true);
   }
 };
+
+// --- THIS IS THE CRITICAL FIX ---
+// Enable pre-flight requests for all routes
+app.options('*', cors(corsOptions)); // This must come BEFORE your routes
+
+// Now apply the CORS options to all subsequent requests
 app.use(cors(corsOptions));
 
 
 // --- Standard Middleware ---
-
-// Body Parser Middleware
 app.use(express.json());
 
 
 // --- API Routes ---
-
-// API health check route
 app.get("/", (req, res) => {
     res.send("API is running...");
 });
 
-// User authentication routes
 app.use("/api/users", authRoutes);
 
 
 // --- Centralized Error Handling ---
-
-// 3. Custom Error Handler Middleware (must be after all routes)
 const errorHandler = (err, req, res, next) => {
-  // Log the error for debugging purposes
   console.error(err.stack);
-
-  // Set a default status code if one isn't already set
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  
   res.status(statusCode).json({
     message: err.message,
-    // In development, you might want to see the stack trace
-    stack: process.env.NODE_ENV === 'production' ? '🥞' : err.stack,
+    stack: process.env.NODE_ENV === 'production' ? null : err.stack,
   });
 };
 app.use(errorHandler);
 
 
 // --- Server Startup ---
-
-// Connect to Database and Start Server
 connectDB();
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
